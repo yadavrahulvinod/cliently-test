@@ -26,38 +26,40 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 py-4">
-      <div className="container">
+      <div className="w-full px-4 md:px-12">
         {/* Desktop Navigation - Base44 style glassmorphism */}
-        <div className="hidden md:flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="flex items-center">
-            <img src={clientlyLogo} alt="Cliently" className="h-6 md:h-7 w-auto" />
-          </Link>
+        {/* Desktop Navigation - Single Long Pill Style */}
+        <div className="hidden md:flex items-center justify-center pt-2">
+          <div className="flex items-center justify-between w-full px-4 py-2.5 rounded-full glass-strong border border-white/10 shadow-lg backdrop-blur-md bg-black/40">
+            {/* Logo inside nav */}
+            <Link to="/" className="flex items-center shrink-0 pl-2">
+              <img src={clientlyLogo} alt="Cliently" className="h-6 md:h-7 w-auto" />
+            </Link>
 
-          {/* Center Nav - Glass pill with individual pill items */}
-          <nav className="flex items-center gap-1 px-2 py-2 rounded-full glass-strong">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-200 ${
-                  location.pathname === link.path
-                    ? 'bg-foreground text-background'
-                    : 'text-foreground/70 hover:text-foreground hover:bg-foreground/5'
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
-          </nav>
+            {/* Center Nav Links */}
+            <nav className="flex items-center gap-1 mx-4">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${location.pathname === link.path
+                    ? 'bg-foreground text-background shadow-md'
+                    : 'text-foreground/70 hover:text-foreground hover:bg-white/5'
+                    }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </nav>
 
-          {/* CTA Button */}
-          <Button 
-            onClick={openWhatsApp} 
-            className="rounded-full px-6 bg-foreground text-background hover:bg-foreground/90"
-          >
-            Start Building
-          </Button>
+            {/* CTA Button inside nav */}
+            <Button
+              onClick={openWhatsApp}
+              className="rounded-full px-6 py-5 shrink-0 bg-foreground text-background hover:bg-foreground/90 transition-all duration-300"
+            >
+              Start Building
+            </Button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
@@ -85,17 +87,16 @@ const Header = () => {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`text-base font-medium py-3 px-4 rounded-xl transition-all ${
-                    location.pathname === link.path
-                      ? 'bg-foreground text-background'
-                      : 'text-foreground/70 hover:bg-foreground/5'
-                  }`}
+                  className={`text-base font-medium py-3 px-4 rounded-xl transition-all ${location.pathname === link.path
+                    ? 'bg-foreground text-background'
+                    : 'text-foreground/70 hover:bg-foreground/5'
+                    }`}
                 >
                   {link.name}
                 </Link>
               ))}
-              <Button 
-                onClick={openWhatsApp} 
+              <Button
+                onClick={openWhatsApp}
                 className="mt-2 rounded-full bg-foreground text-background hover:bg-foreground/90"
               >
                 Start Building

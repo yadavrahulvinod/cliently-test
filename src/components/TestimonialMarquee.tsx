@@ -27,13 +27,13 @@ const testimonialImages = [
 ];
 
 const TestimonialCard = ({ testimonial, imageIndex }: { testimonial: Testimonial; imageIndex: number }) => (
-  <div className="flex-shrink-0 w-[280px] md:w-[350px] mx-3 p-6 bg-card rounded-2xl border border-border/50 shadow-soft hover:shadow-soft-lg transition-all duration-300 group hover:border-foreground/20 whitespace-normal">
+  <div className="flex-shrink-0 w-[280px] md:w-[350px] mx-3 p-6 bg-card rounded-2xl border border-white/10 shadow-2xl hover:shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] transition-all duration-300 group hover:border-foreground/20 whitespace-normal">
     <p className="text-foreground/80 text-sm leading-relaxed mb-6 line-clamp-4">
       "{testimonial.text}"
     </p>
     <div className="flex items-center gap-3">
-      <img 
-        src={testimonialImages[imageIndex % testimonialImages.length]} 
+      <img
+        src={testimonialImages[imageIndex % testimonialImages.length]}
         alt={testimonial.name}
         className="w-10 h-10 rounded-full object-cover"
       />
@@ -48,7 +48,7 @@ const TestimonialCard = ({ testimonial, imageIndex }: { testimonial: Testimonial
 const TestimonialMarquee = ({ testimonials, direction = 'left', speed = 30 }: TestimonialMarqueeProps) => {
   const [isPaused, setIsPaused] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   // Create a sufficient number of duplicates to fill the screen + buffer
   // For a typical 1920px screen and 350px cards, we need about 6 cards visible.
   // 4 testimonials * 350px = 1400px (might be short).
@@ -65,9 +65,9 @@ const TestimonialMarquee = ({ testimonials, direction = 'left', speed = 30 }: Te
       onTouchStart={() => setIsPaused(true)}
       onTouchEnd={() => setIsPaused(false)}
     >
-      <div 
+      <div
         className={`flex ${direction === 'left' ? 'animate-marquee' : 'animate-marquee-reverse'}`}
-        style={{ 
+        style={{
           '--duration': `${speed}s`,
           animationPlayState: isPaused ? 'paused' : 'running',
           width: 'max-content'
@@ -102,15 +102,15 @@ const TestimonialMarquee = ({ testimonials, direction = 'left', speed = 30 }: Te
 // Re-implementing correctly for CSS infinite loop
 const TestimonialMarqueeFixed = ({ testimonials, direction = 'left', speed = 40 }: TestimonialMarqueeProps) => {
   const [isPaused, setIsPaused] = useState(false);
-  
+
   // Ensure we have enough items to fill a wide screen
   // 350px per card + 24px margin (mx-3 * 2) = ~374px
   // 1920 / 374 ~= 5.1 items.
   // If testimonials.length is 4, we need to double it first to be safe as a "base set".
   const baseSet = testimonials.length < 5 ? [...testimonials, ...testimonials] : testimonials;
-  
+
   return (
-    <div 
+    <div
       className="overflow-hidden whitespace-nowrap"
       onMouseDown={() => setIsPaused(true)}
       onMouseUp={() => setIsPaused(false)}
@@ -118,9 +118,9 @@ const TestimonialMarqueeFixed = ({ testimonials, direction = 'left', speed = 40 
       onTouchStart={() => setIsPaused(true)}
       onTouchEnd={() => setIsPaused(false)}
     >
-      <div 
+      <div
         className={`inline-flex ${direction === 'left' ? 'animate-marquee' : 'animate-marquee-reverse'}`}
-        style={{ 
+        style={{
           '--duration': `${speed}s`,
           animationPlayState: isPaused ? 'paused' : 'running',
         } as React.CSSProperties}

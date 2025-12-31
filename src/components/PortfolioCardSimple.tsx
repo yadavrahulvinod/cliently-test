@@ -46,3 +46,4 @@ const PortfolioCardSimple = ({ image, title, subtitle, size }: PortfolioCardSimp
 
 export default PortfolioCardSimple;
 
+

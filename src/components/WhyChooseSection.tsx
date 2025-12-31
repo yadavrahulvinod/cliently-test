@@ -33,29 +33,39 @@ const stats = [
 
 const CountUpNumber = ({ target, suffix, isVisible }: { target: number; suffix: string; isVisible: boolean }) => {
   const [count, setCount] = useState(0);
-  
+
   useEffect(() => {
-    if (!isVisible) return;
-    
-    let startTime: number;
-    const duration = 2000;
-    
-    const animate = (currentTime: number) => {
-      if (!startTime) startTime = currentTime;
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      
-      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-      setCount(Math.floor(easeOutQuart * target));
-      
-      if (progress < 1) {
-        requestAnimationFrame(animate);
+    let animationFrameId: number;
+
+    if (isVisible) {
+      let startTime: number;
+      const duration = 2000;
+
+      const animate = (currentTime: number) => {
+        if (!startTime) startTime = currentTime;
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+        setCount(Math.floor(easeOutQuart * target));
+
+        if (progress < 1) {
+          animationFrameId = requestAnimationFrame(animate);
+        }
+      };
+
+      animationFrameId = requestAnimationFrame(animate);
+    } else {
+      setCount(0);
+    }
+
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
       }
     };
-    
-    requestAnimationFrame(animate);
   }, [isVisible, target]);
-  
+
   return (
     <span className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground">
       {count}{suffix}
@@ -70,9 +80,7 @@ const WhyChooseSection = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        setIsVisible(entry.isIntersecting);
       },
       { threshold: 0.3 }
     );
@@ -85,7 +93,10 @@ const WhyChooseSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-24 bg-secondary">
+    <section ref={sectionRef} className="py-24 bg-secondary relative">
+      {/* Top/Bottom Gradients for transitions */}
+      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
       <div className="container">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -130,10 +141,10 @@ const WhyChooseSection = () => {
                 className="flex flex-col items-center justify-center text-center p-6 animate-fade-in-up"
                 style={{ animationDelay: `${(index + 4) * 100}ms` }}
               >
-                <CountUpNumber 
-                  target={stat.value} 
-                  suffix={stat.suffix} 
-                  isVisible={isVisible} 
+                <CountUpNumber
+                  target={stat.value}
+                  suffix={stat.suffix}
+                  isVisible={isVisible}
                 />
                 <span className="text-muted-foreground mt-2 text-sm md:text-base">
                   {stat.label}

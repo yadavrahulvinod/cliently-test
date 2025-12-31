@@ -6,12 +6,13 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-card pt-16 pb-8 border-t border-border/50">
+    <footer className="bg-card pt-16 pb-8 relative">
+      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div className="space-y-4">
-            <img src={clientlyLogo} alt="Cliently" className="h-10 w-auto" />
+            <img src={clientlyLogo} alt="Cliently" className="h-7 w-auto" />
             <p className="text-muted-foreground text-sm leading-relaxed">
               Modern, fast, mobile-first websites built to grow your business. We turn ideas into digital experiences.
             </p>
@@ -78,7 +79,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-border pt-8">
+        <div className="pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-muted-foreground text-sm">
               © {currentYear} Cliently. All rights reserved.

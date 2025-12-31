@@ -81,6 +81,10 @@ const StickyFeaturesSection = () => {
       className="relative"
       style={!isMobile ? { height: `${features.length * 100}vh` } : undefined}
     >
+      {/* Top/Bottom Gradients for transitions */}
+      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
+
       {!isMobile ? (
         <div className="sticky top-0 h-screen flex items-center overflow-hidden">
           <div className="mx-auto max-w-7xl w-full px-6 md:px-12 flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
@@ -104,18 +108,16 @@ const StickyFeaturesSection = () => {
                   <motion.button
                     key={feature.id}
                     onClick={() => setActiveFeature(index)}
-                    className={`w-full text-left py-4 border-l-2 pl-4 transition-all ${
-                      activeFeature === index
-                        ? 'border-foreground'
-                        : 'border-transparent'
-                    }`}
+                    className={`w-full text-left py-4 border-l-2 pl-4 transition-all ${activeFeature === index
+                      ? 'border-foreground'
+                      : 'border-transparent'
+                      }`}
                   >
                     <h3
-                      className={`text-lg font-semibold ${
-                        activeFeature === index
-                          ? 'text-foreground'
-                          : 'text-muted-foreground'
-                      }`}
+                      className={`text-lg font-semibold ${activeFeature === index
+                        ? 'text-foreground'
+                        : 'text-muted-foreground'
+                        }`}
                     >
                       {feature.title}
                     </h3>
@@ -147,7 +149,7 @@ const StickyFeaturesSection = () => {
                   }}
                   transition={{ duration: 0.6, ease: 'easeOut' }}
                 >
-                  <div className="relative w-full h-full max-w-2xl max-h-[500px] rounded-xl overflow-hidden shadow-2xl">
+                  <div className="relative w-full h-full max-w-2xl max-h-[500px] rounded-xl overflow-hidden shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] border border-white/10">
                     <img
                       src={feature.image}
                       alt={feature.title}
@@ -175,10 +177,10 @@ const StickyFeaturesSection = () => {
                   <p className="text-base text-muted-foreground">{feature.description}</p>
                 </div>
                 <div className="relative w-full aspect-video rounded-xl overflow-hidden mt-2 bg-muted">
-                  <img 
-                    src={feature.image} 
-                    alt={feature.title} 
-                    className="w-full h-full object-cover" 
+                  <img
+                    src={feature.image}
+                    alt={feature.title}
+                    className="w-full h-full object-cover"
                     loading="lazy"
                   />
                 </div>

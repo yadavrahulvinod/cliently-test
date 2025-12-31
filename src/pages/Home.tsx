@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import HeroSection from '@/components/HeroSection';
-import PortfolioGrid from '@/components/PortfolioGrid';
+import PortfolioCollage from '@/components/PortfolioCollage';
 import StickyScrollSolutions from '@/components/StickyScrollSolutions';
 import WhyChooseSection from '@/components/WhyChooseSection';
 import TestimonialMarquee from '@/components/TestimonialMarquee';
@@ -67,7 +67,7 @@ const Home = () => {
   // #region agent log
   console.log('[DEBUG] Home component rendering');
   // #endregion
-  
+
   const openWhatsApp = () => {
     window.open('https://wa.me/918356891147?text=Hi%20Cliently!%20I%27m%20interested%20in%20your%20services.', '_blank');
   };
@@ -81,83 +81,86 @@ const Home = () => {
 
   try {
     // #region agent log
-  console.log('[DEBUG] Home component - About to render JSX');
-  // #endregion
-  
-  return (
-    <main>
-      {/* Hero Section - Framer style */}
-      <HeroSection />
+    console.log('[DEBUG] Home component - About to render JSX');
+    // #endregion
 
-      {/* Portfolio Grid - 22 tiles in 7 columns */}
-      <ErrorBoundary fallback={<div className="p-8 text-center text-foreground">Portfolio Grid Error - Check Console</div>}>
-        <PortfolioGrid />
-      </ErrorBoundary>
+    return (
+      <main>
+        {/* Hero Section - Framer style */}
+        <HeroSection />
 
-      {/* Why Choose Us Section */}
-      <WhyChooseSection />
+        {/* Portfolio Collage - Dense masonry grid filling the screen */}
+        <ErrorBoundary fallback={<div className="p-8 text-center text-foreground">Portfolio Grid Error - Check Console</div>}>
+          <PortfolioCollage />
+        </ErrorBoundary>
 
-      {/* Solutions Section - Sticky Scroll "Create, collaborate, go live" */}
-      <section className="bg-background">
-        <StickyScrollSolutions />
-      </section>
+        {/* Why Choose Us Section */}
+        <WhyChooseSection />
 
-      {/* Testimonials Section - Dual Marquee */}
-      <section className="py-24 bg-secondary overflow-hidden">
-        <div className="container mb-12">
-          <div className="text-center">
+        {/* Solutions Section - Sticky Scroll "Create, collaborate, go live" */}
+        <section className="bg-background">
+          <StickyScrollSolutions />
+        </section>
+
+        {/* Testimonials Section - Dual Marquee */}
+        <section className="py-24 bg-secondary overflow-hidden relative">
+          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
+          <div className="container mb-12">
+            <div className="text-center">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                What Our Clients Say
+              </h2>
+              <p className="text-muted-foreground">Don't just take our word for it.</p>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            {/* Top Row - Scrolls Left - Slower speed */}
+            <TestimonialMarquee testimonials={testimonialsRow1} direction="left" speed={40} />
+
+            {/* Bottom Row - Scrolls Right - Slower speed */}
+            <TestimonialMarquee testimonials={testimonialsRow2} direction="right" speed={40} />
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-24 bg-card relative">
+          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
+          <div className="container text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              What Our Clients Say
+              Ready to Transform Your Online Presence?
             </h2>
-            <p className="text-muted-foreground">Don't just take our word for it.</p>
-          </div>
-        </div>
+            <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
+              Let's discuss how we can help your business grow with a modern, high-converting website.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+              <Button
+                onClick={openWhatsApp}
+                className="rounded-full px-8 py-6 text-base bg-foreground text-background hover:bg-foreground/90"
+              >
+                Chat on WhatsApp
+              </Button>
+              <Button
+                variant="outline"
+                className="rounded-full px-8 py-6 text-base border-foreground/20 text-foreground hover:bg-foreground/5"
+                asChild
+              >
+                <Link to="/contact">Contact Us</Link>
+              </Button>
+            </div>
 
-        <div className="space-y-6">
-          {/* Top Row - Scrolls Left - Slower speed */}
-          <TestimonialMarquee testimonials={testimonialsRow1} direction="left" speed={40} />
-          
-          {/* Bottom Row - Scrolls Right - Slower speed */}
-          <TestimonialMarquee testimonials={testimonialsRow2} direction="right" speed={40} />
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 bg-card border-t border-border/50">
-        <div className="container text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Ready to Transform Your Online Presence?
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-            Let's discuss how we can help your business grow with a modern, high-converting website.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-            <Button
-              onClick={openWhatsApp}
-              className="rounded-full px-8 py-6 text-base bg-foreground text-background hover:bg-foreground/90"
-            >
-              Chat on WhatsApp
-            </Button>
-            <Button
-              variant="outline"
-              className="rounded-full px-8 py-6 text-base border-foreground/20 text-foreground hover:bg-foreground/5"
-              asChild
-            >
-              <Link to="/contact">Contact Us</Link>
-            </Button>
-          </div>
-
-          <div className="max-w-4xl mx-auto rounded-2xl overflow-hidden border border-border/50 shadow-2xl bg-background/50 backdrop-blur-sm">
-             <Cal 
-                calLink="rick/30min"
-                style={{width:"100%",height:"100%",overflow:"hidden"}}
-                config={{layout: 'month_view'}}
+            <div className="max-w-6xl mx-auto h-[650px] rounded-2xl overflow-hidden shadow-2xl bg-background/50 backdrop-blur-sm relative">
+              <Cal
+                calLink="rahul-vinod-yadav-v0bquo/30min"
+                style={{ width: "100%", height: "100%", overflow: "hidden" }}
+                config={{ layout: 'month_view', theme: 'dark' }}
               />
+            </div>
           </div>
-        </div>
-      </section>
-    </main>
-  );
+        </section>
+      </main>
+    );
   } catch (error) {
     // #region agent log
     console.error('[DEBUG] Error in Home component', error);
